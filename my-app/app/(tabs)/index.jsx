@@ -14,8 +14,8 @@ const app = () => {
       <Text style={styles.title}> Coffee Wiki </Text>
 
       <Link href="/contact" style ={{marginHorizontal: 'auto'}} asChild>
-      <Pressable styles={styles.button}>
-      <Text styles = {styles.buttonText}>Contact Us</Text>
+      <Pressable style={styles.button}>
+      <Text style = {styles.buttonText}>Contato</Text>
       </Pressable>
       </Link>
       </ImageBackground>
