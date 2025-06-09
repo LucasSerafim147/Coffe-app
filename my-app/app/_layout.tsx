@@ -5,11 +5,14 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
+import { Appearance } from 'react-native';
+import { Colors } from '@/constants/Colors'; 
 
-import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  const colorScheme = Appearance.getColorScheme();
+
+  const theme = colorScheme === 'dark' ? Colors.dark : Colors.light
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
@@ -20,15 +23,16 @@ export default function RootLayout() {
   }
 
   return (
-    <GluestackUIProvider mode="light"><ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          {/* <Stack.Screen name="(coffee)" options={{ headerShown: false }} /> */}
-          {/* <Stack.Screen name= "index" options={{title: "Home", headerShown: false}} />
-          <Stack.Screen name= "contact" options={{title: "Entre em contato", headerShown: false}} /> */}
-          <Stack.Screen name="+not-found" />
+    <GluestackUIProvider mode="light">
+        <Stack screenOptions={{headerStyle: {backgroundColor: theme.headerBackground}, headerTintColor: theme.text, headerShadowVisible: false}}>
+          
+           {<Stack.Screen name= "index" options={{title: "Home", headerShown: false}} /> }
+          <Stack.Screen name= "contact" options={{title: "Entre em contato", headerShown: true}} /> 
+          <Stack.Screen name= "coffeHot" options={{title: "coffeHot", headerTitle: "Hot Coffe",headerShown: true}} /> 
+          <Stack.Screen name= "coffeIced" options={{title: "coffeIced", headerTitle: "Iced Coffe",headerShown: true}} /> 
+          <Stack.Screen name="+not-found" options={{headerShown: false}} />
         </Stack>
         <StatusBar style="auto" />
-      </ThemeProvider></GluestackUIProvider>
+      </GluestackUIProvider>
   );
 }

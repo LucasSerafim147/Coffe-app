@@ -17,7 +17,7 @@
     "**/*.jsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
-    "app/(tabs)/index.jsx",
+    "app/index.jsx",
     "nativewind-env.d.ts"
   ]
 }

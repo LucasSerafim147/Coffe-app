@@ -13,13 +13,31 @@ const app = () => {
       >
       <Text style={styles.title}> Coffee Wiki </Text>
 
+  
+      
+      <Link href="/coffeHot" style ={{marginHorizontal: 'auto'}} asChild>
+      <Pressable style={styles.button}>
+      <Text style = {styles.buttonText}>Hot coffees</Text>
+      </Pressable>
+      </Link>
+      
+      <Link href="/coffeIced" style ={{marginHorizontal: 'auto'}} asChild>
+      <Pressable style={styles.button}>
+      <Text style = {styles.buttonText}>Iced coffees</Text>
+      </Pressable>
+      </Link>
+
       <Link href="/contact" style ={{marginHorizontal: 'auto'}} asChild>
       <Pressable style={styles.button}>
       <Text style = {styles.buttonText}>Contato</Text>
       </Pressable>
       </Link>
+
       </ImageBackground>
     </View>
+
+
+
   )
 }
 export default app
@@ -52,7 +70,8 @@ const styles = StyleSheet.create({
   borderRadius: 20,
   justifyContent: 'center',
   backgroundColor: 'rgba(0,0,0,0.75)',
-  padding: 6
+  padding: 6,
+  marginTop: 4
   },
   buttonText:{
     color: 'white',
