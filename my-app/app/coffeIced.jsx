@@ -3,6 +3,7 @@ import { Colors } from "@/constants/Colors";
 import { StyleSheet, Appearance, Platform, SafeAreaView, ScrollView, FlatList, View, Text, Image} from "react-native";
 import { useState, useEffect } from "react";
 import { fetchData } from '../scripts/apiService.js';
+import { storageCold } from '../scripts/storage.js';
 
 
 export default function MenuScreen(){
@@ -13,16 +14,33 @@ const [loading, setLoading] = useState(true);
 
 
 useEffect(() => {
+    const saveData = storageCold.getString('icedCoffe')
+    if(saveData){
+        const parsedData = JSON.parse(saveData);
+        console.log('Dados salvos encontrados', parsedData);
+        setCoffeeData(parsedData);
+        setLoading(false)
+
+    } 
+    else{
+
     fetchData('https://api.sampleapis.com/coffee/iced') 
       .then(data => {
+        console.log("Dados da API:", data)
         setCoffeeData(data);
+        storageCold.set('icedCoffe', JSON.stringify(data))
+        console.log('Dados salvos no MMKV:', storage.getString('icedCoffe'))
         setLoading(false);
       })
       .catch(error => {
         console.error("Erro ao carregar o menu:", error);
         setLoading(false);
       });
-  }, []);
+    }
+  }, 
+  
+
+  []);
 
 
 

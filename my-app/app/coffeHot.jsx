@@ -1,8 +1,11 @@
 
 import { Colors } from "@/constants/Colors";
-import { StyleSheet, Appearance, Platform, SafeAreaView, ScrollView, FlatList, View, Text, Image} from "react-native";
+import { StyleSheet, Appearance, Platform, SafeAreaView, ScrollView, FlatList, View, Text, Image,} from "react-native";
 import { useState, useEffect } from "react";
 import { fetchData } from '../scripts/apiService.js';
+import { storage } from '../scripts/storage.js';
+
+
 
 
 export default function MenuScreen(){
@@ -13,15 +16,28 @@ const [loading, setLoading] = useState(true);
 
 
 useEffect(() => {
+  const saveData = storage.getString('hotCoffe');
+  if(saveData){
+    const parsedData = JSON.parse(saveData);
+    console.log('Dados salvos encontrados:', parsedData);
+    setCoffeeData(parsedData);
+      setLoading(false);
+  } else{
+console.log('Nenhum dado salvo, buscando da API...');
+  
     fetchData('https://api.sampleapis.com/coffee/hot') 
       .then(data => {
+        console.log('Dados da API:', data);
         setCoffeeData(data);
+        storage.set('hotCoffe', JSON.stringify(data));
+        console.log('Dados salvos no MMKV:', storage.getString('hotCoffe'))
         setLoading(false);
       })
       .catch(error => {
         console.error("Erro ao carregar o menu:", error);
         setLoading(false);
       });
+  }
   }, []);
 
 
